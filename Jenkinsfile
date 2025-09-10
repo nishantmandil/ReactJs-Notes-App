@@ -7,14 +7,12 @@ pipeline {
     }
 
     options {
-        // Discard old builds to save disk space
         buildDiscarder(logRotator(numToKeepStr: '10'))
-        // Limit concurrent builds on this agent to 1
-        throttleConcurrentBuilds(throttleEnabled: true, maxConcurrentPerNode: 1)
+        disableConcurrentBuilds() // ensures only 1 build runs at a time
+        timestamps()              // adds timestamps to console logs
     }
 
     stages {
-
         stage("Cleanup Workspace") {
             steps {
                 cleanWs()
@@ -30,7 +28,6 @@ pipeline {
         stage("Install Dependencies") {
             steps {
                 script {
-                    // Use npm ci for clean and faster installs
                     sh '''
                         if [ -d "node_modules" ]; then
                             echo "node_modules exists, skipping reinstall"
