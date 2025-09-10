@@ -2,7 +2,7 @@ pipeline {
     agent { label 'Jenkins-Agent' }
 
     environment {
-        # Limit Node.js memory usage to 512 MB
+        // Limit Node.js memory usage to 512 MB
         NODE_OPTIONS = "--max_old_space_size=512"
         # Tell React to run in CI mode (no interactive prompts/watchers)
         CI = "true"
